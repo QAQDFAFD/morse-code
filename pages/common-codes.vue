@@ -26,7 +26,7 @@
 					</p>
 					<button
 						@click="playSignal('... --- ...')"
-						class="mt-3 flex items-center text-xs bg-red-100 hover:bg-red-200 text-red-700 py-1 px-2 rounded">
+						class="mt-3 flex items-center text-xs bg-red-100 hover:bg-red-200 text-red-700 py-1 px-2 rounded shadow-sm">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-4 w-4 mr-1"
@@ -52,7 +52,7 @@
 					</p>
 					<button
 						@click="playSignal('-- .- -.-- -.. .- -.--')"
-						class="mt-3 flex items-center text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 py-1 px-2 rounded">
+						class="mt-3 flex items-center text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 py-1 px-2 rounded shadow-sm">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-4 w-4 mr-1"
@@ -78,7 +78,7 @@
 					</p>
 					<button
 						@click="playSignal('.--.  .- -.  .--.  .- -.  .--.  .- -.')"
-						class="mt-3 flex items-center text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 py-1 px-2 rounded">
+						class="mt-3 flex items-center text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 py-1 px-2 rounded shadow-sm">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-4 w-4 mr-1"
@@ -208,7 +208,8 @@
 					class="p-4 border border-indigo-100 rounded-md bg-indigo-50">
 					<h3 class="text-lg font-semibold text-indigo-800 mb-2">{{ message.title }}</h3>
 					<div class="flex items-center mb-3">
-						<div class="font-mono text-sm bg-white px-3 py-2 rounded border border-indigo-200">
+						<div
+							class="font-mono text-sm bg-white px-3 py-2 rounded border border-indigo-200 custom-scrollbar overflow-auto max-h-24">
 							{{ message.code }}
 						</div>
 						<button
@@ -479,5 +480,29 @@
 
 	.btn-primary {
 		@apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded transition-colors;
+	}
+
+	/* 自定义滚动条样式 */
+	.custom-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: #d1d5db transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: #d1d5db;
+		border-radius: 4px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background-color: #9ca3af;
 	}
 </style>

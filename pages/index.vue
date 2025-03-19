@@ -54,20 +54,16 @@
 		<!-- Translation Tool -->
 		<div class="card mb-8" id="translator">
 			<h2 class="text-2xl font-semibold mb-4 text-center">Free Online Morse Code Translator</h2>
-			<div class="flex flex-wrap md:flex-nowrap gap-4 items-center mb-6">
+			<div class="flex flex-wrap md:flex-nowrap gap-4 items-stretch mb-6">
 				<div class="w-full md:w-1/2">
-					<h3 class="text-xl font-semibold mb-2">Text</h3>
-					<div class="relative">
-						<textarea
-							v-model="textInput"
-							@input="textToMorseTranslate"
-							class="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-							placeholder="Enter text to translate to Morse code..."></textarea>
-						<div class="absolute right-2 top-2 flex space-x-1">
+					<div class="flex justify-between items-center mb-2">
+						<h3 class="text-xl font-semibold">Text</h3>
+						<div class="flex space-x-2">
 							<button
 								@click="copyToClipboard(textInput)"
-								class="text-gray-400 hover:text-gray-600 p-1"
-								v-if="textInput"
+								class="text-gray-500 hover:text-indigo-700 p-1 transition-colors"
+								:disabled="!textInput"
+								:class="{ 'opacity-50 cursor-not-allowed': !textInput }"
 								title="Copy text">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -84,8 +80,9 @@
 							</button>
 							<button
 								@click="clearTextInput"
-								class="text-gray-400 hover:text-gray-600 p-1"
-								v-if="textInput"
+								class="text-gray-500 hover:text-red-600 p-1 transition-colors"
+								:disabled="!textInput"
+								:class="{ 'opacity-50 cursor-not-allowed': !textInput }"
 								title="Clear text">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +96,15 @@
 								</svg>
 							</button>
 						</div>
+					</div>
+					<div class="relative h-40">
+						<textarea
+							v-model="textInput"
+							@input="textToMorseTranslate"
+							@focus="textFocused = true"
+							@blur="textFocused = false"
+							class="w-full h-full p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 custom-scrollbar"
+							placeholder="Enter text to translate to Morse code..."></textarea>
 					</div>
 					<div class="flex justify-end mt-2">
 						<span class="text-xs text-gray-500">{{ textCharCount }} characters</span>
@@ -123,18 +129,14 @@
 				</div>
 
 				<div class="w-full md:w-1/2">
-					<h3 class="text-xl font-semibold mb-2">Morse Code</h3>
-					<div class="relative">
-						<textarea
-							v-model="morseInput"
-							@input="morseToTextTranslate"
-							class="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 font-mono"
-							placeholder="Enter Morse code to translate to text..."></textarea>
-						<div class="absolute right-2 top-2 flex space-x-1">
+					<div class="flex justify-between items-center mb-2">
+						<h3 class="text-xl font-semibold">Morse Code</h3>
+						<div class="flex space-x-2">
 							<button
 								@click="copyToClipboard(morseInput)"
-								class="text-gray-400 hover:text-gray-600 p-1"
-								v-if="morseInput"
+								class="text-gray-500 hover:text-indigo-700 p-1 transition-colors"
+								:disabled="!morseInput"
+								:class="{ 'opacity-50 cursor-not-allowed': !morseInput }"
 								title="Copy Morse code">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -151,8 +153,9 @@
 							</button>
 							<button
 								@click="clearMorseInput"
-								class="text-gray-400 hover:text-gray-600 p-1"
-								v-if="morseInput"
+								class="text-gray-500 hover:text-red-600 p-1 transition-colors"
+								:disabled="!morseInput"
+								:class="{ 'opacity-50 cursor-not-allowed': !morseInput }"
 								title="Clear Morse code">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -166,6 +169,15 @@
 								</svg>
 							</button>
 						</div>
+					</div>
+					<div class="relative h-40">
+						<textarea
+							v-model="morseInput"
+							@input="morseToTextTranslate"
+							@focus="morseFocused = true"
+							@blur="morseFocused = false"
+							class="w-full h-full p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 font-mono custom-scrollbar"
+							placeholder="Enter Morse code to translate to text..."></textarea>
 					</div>
 					<div class="flex justify-between mt-2">
 						<button
@@ -388,6 +400,10 @@
 	const textInput = ref('')
 	const morseInput = ref('')
 
+	// Focus states
+	const textFocused = ref(false)
+	const morseFocused = ref(false)
+
 	// Copy status notifications
 	const copyStatus = reactive({
 		text: false,
@@ -512,5 +528,29 @@
 
 	.morse-special-btn {
 		@apply px-3 py-2 border border-gray-300 rounded-md hover:bg-indigo-50 hover:border-indigo-300 transition-colors flex items-center justify-center;
+	}
+
+	/* 自定义滚动条样式 */
+	.custom-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: #d1d5db transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: #d1d5db;
+		border-radius: 4px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background-color: #9ca3af;
 	}
 </style>
