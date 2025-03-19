@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: 'Inter', sans-serif;
+	@apply text-gray-800;
+}
+
+.morse-dot {
+	@apply w-4 h-4 bg-indigo-600 rounded-full inline-block;
+}
+
+.morse-dash {
+	@apply w-12 h-4 bg-indigo-600 rounded-full inline-block;
+}
+
+.morse-space {
+	@apply w-4 h-4 inline-block;
+}
+
+.morse-display {
+	@apply flex items-center space-x-2 my-4;
+}
+
+.btn-primary {
+	@apply px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors;
+}
+
+.btn-secondary {
+	@apply px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors;
+}
+
+.card {
+	@apply bg-white rounded-lg shadow-md p-6;
+}
+
+.morse-card {
+	@apply flex flex-col items-center justify-center border-2 border-gray-300 rounded-lg p-4 h-40 w-40 cursor-pointer transition-all hover:border-indigo-500;
+}
+
+.morse-card.active {
+	@apply border-indigo-500 bg-indigo-50;
+}
