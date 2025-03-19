@@ -1,4 +1,4 @@
-// 摩斯电码映射表
+// 摩斯电码映射表（根据维基百科校对过）
 export const MORSE_CODE = {
 	A: '.-',
 	B: '-...',
@@ -76,9 +76,22 @@ export function textToMorse(text) {
 
 // 将摩斯电码转换为文本
 export function morseToText(morse) {
+	// 处理换行符
+	if (morse.includes('\n')) {
+		return morse
+			.split('\n')
+			.map(line => morseToText(line))
+			.join('\n')
+	}
+
+	// 分割摩斯电码并进行转换
 	return morse
 		.split(' ')
 		.map(code => {
+			// 如果是单词间隔符号
+			if (code === '/') {
+				return ' '
+			}
 			return REVERSE_MORSE_CODE[code] || code
 		})
 		.join('')
@@ -102,9 +115,20 @@ export function getRandomChars(count = 8) {
 // 播放摩斯电码声音
 export function playMorseSound(morseCode, speed = 100) {
 	return new Promise(async resolve => {
-		const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+		let audioContext
 
-		for (const char of morseCode) {
+		try {
+			audioContext = new (window.AudioContext || window.webkitAudioContext)()
+		} catch (e) {
+			console.error('Web Audio API不受支持，无法播放声音', e)
+			resolve()
+			return
+		}
+
+		// 忽略空白字符
+		const cleanCode = morseCode.replace(/\s/g, ' ').replace(/\n/g, ' ')
+
+		for (const char of cleanCode) {
 			if (char === '.') {
 				await playBeep(audioContext, speed)
 				await sleep(speed)
